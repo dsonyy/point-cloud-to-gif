@@ -2,6 +2,10 @@ import sys
 import os
 import png
 
+w = 640
+h = 480
+offset = 40
+
 def main():
     if len(sys.argv) < 3:
         print("Too few arguments passed. Please try this:")
@@ -17,8 +21,9 @@ def main():
         for line in f:
             point = []
             for num in line.split():
-                point.append(num)
+                point.append(int(num))
             pc.append(point)                   
+	
 
     png_file = open(png_path, "wb")
     print(pc)
