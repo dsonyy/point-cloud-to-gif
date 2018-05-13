@@ -3,6 +3,7 @@ import os
 import numpy as np
 import scipy.misc as smp
 
+
 def file_to_pc(filename, echo = True):
     pc = []
     try:
