@@ -1,10 +1,7 @@
 import sys
 import os
-from PIL import Image
-
-w = 640
-h = 480
-offset = 40
+import numpy as np
+import scipy.misc as smp
 
 def file_to_pc(filename, echo = True):
     pc = []
@@ -21,15 +18,11 @@ def file_to_pc(filename, echo = True):
         print(pc)
     return pc
 	
-def pc_to_png(filename):
-    try:
-        image = Image.open(filename)
-    except:
-        print("Unable to load output image.")
-        return
-    image.load()
+def pc_to_array():
+    array = np.zeros((1024, 1024, 3), dtype=np.uint8)
+    array[512, 512] = [255, 0, 0]
 
-
+    return array
 
 
 
@@ -41,7 +34,9 @@ def main():
         print(" <output> -- target png filename (for write)")
         return
 
-    file_to_pc(sys.argv[1])
+    pc = file_to_pc(sys.argv[1])
+    array = pc_to_array()
+    smp.imsave(sys.argv[2], array, format = "png")
 
 if __name__ == "__main__":
 	main()
