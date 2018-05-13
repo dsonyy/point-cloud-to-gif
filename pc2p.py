@@ -18,9 +18,15 @@ def file_to_pc(filename, echo = True):
         print(pc)
     return pc
 	
-def pc_to_array():
-    array = np.zeros((1024, 1024, 3), dtype=np.uint8)
-    array[512, 512] = [255, 0, 0]
+def pc_to_array(pc):
+    w = 1000
+    h = 1000
+    array = np.zeros((w, h, 3), dtype=np.uint8)
+    for point in pc:
+        x, y, z = point[0], point[1], point[2]
+        array[10 + x, 10 + y + round(0.1 * z)]  = [255 - round(z * 10), 0, 0]
+        print(str(10 + x) + " " + str(10 + y + round(0.1 * z)))
+        
 
     return array
 
@@ -35,7 +41,7 @@ def main():
         return
 
     pc = file_to_pc(sys.argv[1])
-    array = pc_to_array()
+    array = pc_to_array(pc)
     smp.imsave(sys.argv[2], array, format = "png")
 
 if __name__ == "__main__":
