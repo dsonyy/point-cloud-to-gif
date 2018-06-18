@@ -18,24 +18,20 @@ def file_to_pc(filename, echo = True):
     if echo == True:
         print(pc)
     return pc
-	
-def place_point(w, h, x, y, z):
-    array_x = w / x
-    array_y = h / y
-    intensity = 255
-    return array_x, array_y, intensity
 
 def pc_to_array(pc):
-    min_x, max_x = min(pc[0]), max(pc[0])
-    min_y, max_y = min(pc[1]), max(pc[1])
-    min_z, max_z = min(pc[2]), max(pc[2])
-    w = max(pc[]) - min(pc[]) + 0
-    h = max(pc[]) - min(pc[]) + 0
-    array = np.zeros((w, h, 3), dtype=np.uint8)
+    min_x, max_x = min(i[0] for i in pc), max(i[0] for i in pc)
+    min_y, max_y = min(i[1] for i in pc), max(i[1] for i in pc)
+    min_z, max_z = min(i[2] for i in pc), max(i[2] for i in pc)
+    w = max_x - min_x 
+    h = max_y + min_y
+    offset = 300
+    array = np.zeros((w + 2*offset, h + 2*offset, 3), dtype=np.uint8)
     for point in pc:
-        array_x, array_y, intensity = place_point(w, h, point[0], point[1], point[2])
-        array[array_x, array_y] = [array_x, array_y, intensity]
-
+        array_x = point[0]
+        array_y = point[1]
+        intensity = 255 - 255 / (point[2] + 1)
+        array[array_x + offset, array_y + offset] = [intensity, intensity, intensity]
     return array
 
 def array_to_file(filename, array):
