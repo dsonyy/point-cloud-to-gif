@@ -19,31 +19,40 @@ def file_to_pc(filename, echo = True):
         print(pc)
     return pc
 	
+def place_point(w, h, x, y, z):
+    array_x = w / x
+    array_y = h / y
+    intensity = 255
+    return array_x, array_y, intensity
+
 def pc_to_array(pc):
-    w = 1000
-    h = 1000
+    min_x, max_x = min(pc[0]), max(pc[0])
+    min_y, max_y = min(pc[1]), max(pc[1])
+    min_z, max_z = min(pc[2]), max(pc[2])
+    w = max(pc[]) - min(pc[]) + 0
+    h = max(pc[]) - min(pc[]) + 0
     array = np.zeros((w, h, 3), dtype=np.uint8)
     for point in pc:
-        x, y, z = point[0], point[1], point[2]
-        array[10 + x, 10 + y + round(0.1 * z)]  = [255 - round(z * 10), 0, 0]
-        print(str(10 + x) + " " + str(10 + y + round(0.1 * z)))
-        
+        array_x, array_y, intensity = place_point(w, h, point[0], point[1], point[2])
+        array[array_x, array_y] = [array_x, array_y, intensity]
 
     return array
 
-
+def array_to_file(filename, array):
+    smp.imsave(filename, array, format = "png")
+    return
 
 def main():
-    if len(sys.argv) < 3:
+    
+    """if len(sys.argv) < 3:
         print("Too few arguments passed. Please try this:")
         print(" " + os.path.basename(__file__) + " <input>  <output>")
         print(" <input>  -- point cloud filename (read only)")
         print(" <output> -- target png filename (for write)")
-        return
-
-    pc = file_to_pc(sys.argv[1])
+        return"""
+    pc = file_to_pc("./input/cube-s")
     array = pc_to_array(pc)
-    smp.imsave(sys.argv[2], array, format = "png")
+    array_to_file("./output/testing", array)
 
 if __name__ == "__main__":
 	main()
