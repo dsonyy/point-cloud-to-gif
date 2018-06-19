@@ -1,17 +1,19 @@
 import sys
 
 xyz = []
-try:
-    with open(sys.argv[1], "r") as f:
-        for line in f:
-            point = []
+# try:
+with open(sys.argv[1], "r") as f:
+    for line in f:
+        point = []
+        if not line.strip():
             for num in line.split(" "):
-                point.append(int(num))
+                print("--" + num)
+                point.append(float(num))
             xyz.append(point)
 
-except:
-    print("Unable to load input point cloud")
-    sys.exit()
+# except:
+print("Unable to load input point cloud")
+sys.exit()
 
 xyz.sort(key = lambda x: x[2])
 
