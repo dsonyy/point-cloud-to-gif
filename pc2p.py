@@ -6,15 +6,12 @@ import scipy.misc as smp
 
 def file_to_pc(filename, echo = False):
     pc = []
-    try:
-        with open(filename, "r") as f:
-            for line in f:
-                point = []
-                for num in line.split():
-                    point.append(int(num))
-                pc.append(point)
-    except:
-        print("Unable to load input point cloud")
+    with open(filename, "r") as f:
+        for line in f:
+            point = []
+            for num in line.split():
+                point.append(int(num))
+            pc.append(point)
     if echo == True:
         print(pc)
     return pc
@@ -23,7 +20,7 @@ def pc_to_array(pc):
     min_x, max_x = min(i[0] for i in pc), max(i[0] for i in pc)
     min_y, max_y = min(i[1] for i in pc), max(i[1] for i in pc)
     min_z, max_z = min(i[2] for i in pc), max(i[2] for i in pc)
-    min_i, max_i = 100, 255
+    min_i, max_i = 50, 255
     a = 0.4
     w = max_x - min_x + max_z - min_z
     h = max_y - min_y + max_z - min_z
@@ -42,16 +39,27 @@ def array_to_file(filename, array):
 
 def main():
     
-    """if len(sys.argv) < 3:
+    if len(sys.argv) < 3:
         print("Too few arguments passed. Please try this:")
         print(" " + os.path.basename(__file__) + " <input>  <output>")
         print(" <input>  -- point cloud filename (read only)")
         print(" <output> -- target png filename (for write)")
-        return"""
-    pc = file_to_pc("./input/cube2-s")
-    array = pc_to_array(pc)
-    array_to_file("./output/testing", array)
-
+        return
+    try:
+        pc = file_to_pc(sys.argv[1])
+    except:
+        print("Unable to load input point cloud")
+    
+    try:
+        array = pc_to_array(pc)
+    except:
+        print("Unable to generate image array")
+    
+    try:
+        array_to_file(sys.argv[2], array)
+    except:
+        print("Unable to export output image")
+    
 if __name__ == "__main__":
 	main()
 
