@@ -4,7 +4,7 @@ import numpy as np
 import scipy.misc as smp
 
 
-def file_to_pc(filename, echo = True):
+def file_to_pc(filename, echo = False):
     pc = []
     try:
         with open(filename, "r") as f:
@@ -23,15 +23,17 @@ def pc_to_array(pc):
     min_x, max_x = min(i[0] for i in pc), max(i[0] for i in pc)
     min_y, max_y = min(i[1] for i in pc), max(i[1] for i in pc)
     min_z, max_z = min(i[2] for i in pc), max(i[2] for i in pc)
-    w = max_x - min_x 
-    h = max_y + min_y
-    offset = 300
+    min_i, max_i = 100, 255
+    a = 0.4
+    w = max_x - min_x + max_z - min_z
+    h = max_y - min_y + max_z - min_z
+    offset = 100
     array = np.zeros((w + 2*offset, h + 2*offset, 3), dtype=np.uint8)
     for point in pc:
-        array_x = point[0]
-        array_y = point[1]
-        intensity = 255 - 255 / (point[2] + 1)
-        array[array_x + offset, array_y + offset] = [intensity, intensity, intensity]
+        array_x = offset - 1 + w - point[0] - point[2]
+        array_y = offset - 1 + h - point[1] - point[2]
+        intensity = min_i + (max_i - min_i) / (max_z - min_z) * point[2]
+        array[array_x, array_y] = [intensity, intensity, intensity]
     return array
 
 def array_to_file(filename, array):
@@ -46,7 +48,7 @@ def main():
         print(" <input>  -- point cloud filename (read only)")
         print(" <output> -- target png filename (for write)")
         return"""
-    pc = file_to_pc("./input/cube-s")
+    pc = file_to_pc("./input/cube2-s")
     array = pc_to_array(pc)
     array_to_file("./output/testing", array)
 
