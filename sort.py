@@ -5,9 +5,10 @@ xyz = []
 with open(sys.argv[1], "r") as f:
     for line in f:
         point = []
-        if line.strip():
+        if not line.strip():
             for num in line.split(" "):
-                point.append(round(float(num)))
+                print("-->" + num)
+                point.append(float(num))
             xyz.append(point)
 
 # except:
