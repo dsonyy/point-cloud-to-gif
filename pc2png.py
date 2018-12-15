@@ -2,6 +2,8 @@ import pygame
 import sys
 import math
 
+
+
 xyz = []
 try:
     data = open(sys.argv[1], "r").readlines()
