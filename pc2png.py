@@ -51,9 +51,8 @@ center_x = max_x / 2
 center_y = max_y / 2
 center_z = max_z / 2
 
-P_WIDTH = 2
-P_HEIGHT = 2
-K = 3
+P_WIDTH = 5
+P_HEIGHT = 5
 
 def distance(A, B = [center_x, center_y, center_z]):
     return math.sqrt((A[0] - B[0])**2 + (A[1] - B[1])**2 + (A[2] - B[2])**2)
@@ -62,30 +61,37 @@ def get_color(point):
     repeat = 1
 
     r = math.floor(255 * 1 / (max_x) * point[0] % 510)
-    g = r #math.floor(255 * repeat / (max_y) * point[1] % 510)
+    g = math.floor(255 * repeat / (max_y) * point[1] % 510)
     b = math.floor(255 * repeat / (max_z) * point[2] % 510)
 
     if r <= 255: r = 255 - r
     elif r > 255: r = r - 255
 
-    # if g <= 255: g = 255 - g
-    # elif g > 255: g = g - 255
+    if g <= 255: g = 255 - g
+    elif g > 255: g = g - 255
 
-    # if b <= 255: b = 255 - b
-    # elif b > 255: b = b - 255
+    if b <= 255: b = 255 - b
+    elif b > 255: b = b - 255
 
-    return [255 / 100 *distance(point), 255 / 100 *distance(point), 255 / 100 *distance(point)]
+    return [r, g, b]
     
-def get_rect(point):
-    x = point[0] * K
-    y = point[1] * K 
-    z = point[2] * K
+def get_pos(point):
+    SCALE = 3
+    
+    x = point[0] * SCALE
+    y = point[1] * SCALE
+    z = point[2] * SCALE
+    offset = y 
 
-    return [y+x*0.2, z+x*0.2, P_WIDTH, P_HEIGHT]
+    return [x + offset, z + offset]
+
+def get_rect(point):
+    pos = get_pos(point)
+    return [pos[0], pos[1], P_WIDTH, P_HEIGHT]
     
 for point in xyz:
     pygame.draw.rect(window_main, get_color(point), get_rect(point))
-    #pygame.draw.rect(window_main, [0,0,0], get_rect(point), 1)
+    # pygame.draw.rect(window_main, [255,255,255], get_rect(point), 1)
 
     
 # main loop
