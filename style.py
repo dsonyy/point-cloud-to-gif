@@ -1,5 +1,4 @@
 import pygame
-# from pc2png import X, Y, Z, COLOR, PLANE_X, PLANE_Y, PLANE_Z
 
 '''
 def dummy(point, cloud) -> pygame.Surface:

@@ -1,5 +1,12 @@
 import math
 
+'''
+def dummy(cloud, point) -> list:
+
+    
+    return [r, g, b]
+'''
+
 def xyzrgb(cloud, point):
     repeat = 1
 
