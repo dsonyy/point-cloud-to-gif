@@ -53,12 +53,19 @@ center_x = max_x / 2
 center_y = max_y / 2
 center_z = max_z / 2
 
-P_WIDTH = 1
-P_HEIGHT = 1
+P_WIDTH = 3
+P_HEIGHT = 3
 
 def distance(A, B = [center_x, center_y, center_z]):
     return math.sqrt((A[0] - B[0])**2 + (A[1] - B[1])**2 + (A[2] - B[2])**2)
 
+def add_colors(xyz):
+    cxyz = []
+    for p in xyz:
+        point = [p[0], p[1], p[2], get_color(p)]
+        cxyz.append(point)
+    return cxyz
+    
 def get_color(point):
     repeat = 1
 
@@ -77,17 +84,33 @@ def get_color(point):
 
     return [r, g, b]
     
-def rotate_cloud(xyz, angle):
+def rotate_cloud(xyz, angle, axis):
     rxyz = []
+    if axis == 0:
+        A = 1
+        B = 2
+        CA = max_y / 2
+        CB = max_z / 2 
+    elif axis == 1:
+        A = 0
+        B = 2
+        CA = max_x / 2
+        CB = max_z / 2 
+    elif axis == 2:
+        A = 0
+        B = 1
+        CA = max_x / 2
+        CB = max_y / 2
+
     for p in xyz:
         s = math.sin(angle)
         c = math.cos(angle)
-        p[2] -= max_x / 2
-        p[1] -= max_y / 2
-        xnew = p[2] * c - p[1] * s
-        ynew = p[2] * s + p[1] * c
-        p[2] = xnew + max_x / 2
-        p[1] = ynew + max_y / 2
+        p[A] -= CA
+        p[B] -= CB
+        xnew = p[A] * c - p[B] * s
+        ynew = p[A] * s + p[B] * c
+        p[A] = xnew + CA
+        p[B] = ynew + CB
         rxyz.append(p)
 
     return rxyz 
@@ -109,7 +132,7 @@ def get_rect(point):
     return [pos[0], pos[1], P_WIDTH, P_HEIGHT]
     
 
-    
+xyz = add_colors(xyz)
 # main loop
 running = True
 i = 0
@@ -118,13 +141,16 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
-    xyz = rotate_cloud(xyz, 0.1)
+    xyz = rotate_cloud(xyz, 0.1, 0)
+    xyz = rotate_cloud(xyz, 0.05, 1)
+    xyz = rotate_cloud(xyz, 0.075, 2)
+    
     window_main.fill([0,0,0])
     for point in xyz:
         # pygame.draw.rect(window_main, get_color(point), get_rect(point))
         s = pygame.Surface((P_WIDTH, P_HEIGHT))  # the size of your rect
         s.set_alpha(255)                # alpha level
-        s.fill(get_color(point))           # this fills the entire surface
+        s.fill(point[3])           # this fills the entire surface
         window_main.blit(s, get_pos(point))    # (0,0) are the top-left coordinates
         
         # pygame.draw.rect(window_main, [255,255,255], get_rect(point), 1)
