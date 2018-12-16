@@ -11,7 +11,7 @@
             "program": "${file}",
             "console": "integratedTerminal",
             "args": [
-                "${workspaceFolder}\\input\\stozek.txt"
+                "${workspaceFolder}\\input\\marszalek.txt"
             ],
         },
         {

@@ -53,8 +53,8 @@ center_x = max_x / 2
 center_y = max_y / 2
 center_z = max_z / 2
 
-P_WIDTH = 3
-P_HEIGHT = 3
+P_WIDTH = 4
+P_HEIGHT = 4
 
 def distance(A, B = [center_x, center_y, center_z]):
     return math.sqrt((A[0] - B[0])**2 + (A[1] - B[1])**2 + (A[2] - B[2])**2)
