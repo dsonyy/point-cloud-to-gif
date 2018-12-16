@@ -83,7 +83,14 @@ def get_color(point):
     elif b > 255: b = b - 255
 
     return [r, g, b]
-    
+
+def scale_cloud(xyz, multiplier):
+    sxyz = []
+    for p in xyz:
+        p[0] *= multiplier
+        p[1] *= multiplier
+        p[2] *= multiplier
+
 def rotate_cloud(xyz, angle, axis):
     rxyz = []
     if axis == 0:
