@@ -53,8 +53,8 @@ center_x = max_x / 2
 center_y = max_y / 2
 center_z = max_z / 2
 
-P_WIDTH = 4
-P_HEIGHT = 4
+P_WIDTH = 1
+P_HEIGHT = 1
 
 def distance(A, B = [center_x, center_y, center_z]):
     return math.sqrt((A[0] - B[0])**2 + (A[1] - B[1])**2 + (A[2] - B[2])**2)
@@ -149,7 +149,7 @@ while running:
     for point in xyz:
         # pygame.draw.rect(window_main, get_color(point), get_rect(point))
         s = pygame.Surface((P_WIDTH, P_HEIGHT))  # the size of your rect
-        s.set_alpha(255)                # alpha level
+        s.set_alpha(64)                # alpha level
         s.fill(point[3])           # this fills the entire surface
         window_main.blit(s, get_pos(point))    # (0,0) are the top-left coordinates
         
