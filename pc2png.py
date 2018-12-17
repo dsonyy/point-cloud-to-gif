@@ -21,7 +21,7 @@ def preview(cloud, win_width, win_height, function=None, *args):
                 running = False
 
         window_main.fill([0,0,0])
-        for p in cloud.cloud:
+        for p in cloud.points:
             s = style.square(p, cloud)
             window_main.blit(s, cloudd.get_pos(p))
         pygame.display.flip()
@@ -71,6 +71,6 @@ def scale_cloud(xyz, multiplier):
 #     return rxyz 
 
 
-c = cloudd.import_cloud(sys.argv[1])
-c.color(coloring.DEFAULT_COLORING)
+c = cloudd.PointCloud(sys.argv[1])
+cloudd.color(c, coloring.DEFAULT_COLORING)
 preview(c, 800, 600)
