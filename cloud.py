@@ -68,8 +68,9 @@ class PointCloud:
         self.normalise()
 
 def diameter(pc):
-    a = max(pc.min_x, pc.min_y, pc.min_z)
-    return a * math.sqrt(3)   
+    #a = max(pc.min_x, pc.min_y, pc.min_z)
+    #return a * math.sqrt(3)   
+    return 0
 
 def color(pc, coloring):
     for i in range(len(pc.points)):
@@ -89,8 +90,8 @@ def get_pos(point):
     X_offset = 0
     Y_offset = 0
     
-    return [x - z * X_offset + 200,
-            y - z * Y_offset + 200]
+    return [x - z * X_offset,
+            y - z * Y_offset]
 
 
 # def scale_cloud(pc, multiplier):

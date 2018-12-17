@@ -24,8 +24,8 @@ def xyzrgb(cloud, point, repeat=1):
     return [r, g, b]
 
 def deep(cloud, point):
-    r = math.floor(point[1] / cloud.max_y * 255)
-    g = math.floor(255 / cloud.max_x * point[1] % 256)
+    r = math.floor(255 / cloud.max_y * point[1] % 256)
+    g = math.floor(255 / cloud.max_y * point[1] % 256)
     b = math.floor(255 / cloud.max_y * point[1] % 256)
 
     return [r, g, b]
