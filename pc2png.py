@@ -23,10 +23,12 @@ def preview(cloud, win_width, win_height, function=None, *args):
         window_main.fill([0,0,0])
         for p in cloud.points:
             if len(p) == 3:
-                color = (coloring.deep(cloud, p))
-                s = style.square(p + [color], cloudd.get_pos(p))
+                if (p[1] < 0):
+                    pass
+                color = (coloring.deep(cloud, p))                
+                s = style.square(p + [color])
             else:
-                s = style.square(p, cloud)
+                s = style.square(p)
             window_main.blit(s, cloudd.get_pos(p))
         pygame.display.flip()
 

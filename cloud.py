@@ -16,22 +16,22 @@ class PointCloud:
     def normalise(self):        
         if self.min_x < 0:
             self.max_x -= self.min_x
-            for i in self.points:
-                i[X] -= self.min_x
+            for i in range(len(self.points)):
+                self.points[i][X] -= self.min_x
             self.min_x = 0
-
+     
         if self.min_y < 0:
             self.max_y -= self.min_y
-            for i in self.points:
-                i[Y] -= self.min_y
+            for i in range(len(self.points)):
+                self.points[i][Y] -= self.min_y
             self.min_y = 0
-
+     
         if self.min_z < 0:
             self.max_z -= self.min_z
-            for i in self.points:
-                i[Z] -= self.min_z
+            for i in range(len(self.points)):
+                self.points[i][Z] -= self.min_z
             self.min_z = 0
-                
+
 
     def __init__(self, filename):
         self.points = []
