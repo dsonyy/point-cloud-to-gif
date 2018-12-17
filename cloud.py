@@ -10,6 +10,29 @@ PLANE_Y = Z
 PLANE_Z = Y
 
 class PointCloud:
+    def sort(self):
+        self.points.sort(key = lambda x: [ x[PLANE_Z], x[PLANE_X], x[PLANE_Y] ])
+                    
+    def normalise(self):        
+        if self.min_x < 0:
+            self.max_x -= self.min_x
+            for i in self.points:
+                i[X] -= self.min_x
+            self.min_x = 0
+
+        if self.min_y < 0:
+            self.max_y -= self.min_y
+            for i in self.points:
+                i[Y] -= self.min_y
+            self.min_y = 0
+
+        if self.min_z < 0:
+            self.max_z -= self.min_z
+            for i in self.points:
+                i[Z] -= self.min_z
+            self.min_z = 0
+                
+
     def __init__(self, filename):
         self.points = []
         self.has_colors = False
@@ -41,26 +64,8 @@ class PointCloud:
                 if point[Z] > self.max_z: self.max_z = point[Z]
                 elif point[Z] < self.min_z: self.min_z = point[Z]
 
-        self.points.sort(key = lambda x: [ x[PLANE_Z], x[PLANE_X], x[PLANE_Y] ])
-            
-        if self.min_x < 0:
-            self.max_x -= self.min_x
-            for i in self.points:
-                i[X] -= self.min_x
-            self.min_x = 0
-
-        if self.min_y < 0:
-            self.max_y -= self.min_y
-            for i in self.points:
-                i[Y] -= self.min_y
-            self.min_y = 0
-
-        if self.min_z < 0:
-            self.max_z -= self.min_z
-            for i in self.points:
-                i[Z] -= self.min_z
-            self.min_z = 0
-
+        self.sort()
+        self.normalise()
 
 def diameter(pc):
     a = max(pc.min_x, pc.min_y, pc.min_z)
@@ -82,7 +87,7 @@ def get_pos(point):
     y = point[PLANE_Y] * SCALE
     z = point[PLANE_Z] * SCALE
     X_offset = 0
-    Y_offset = 0.3
+    Y_offset = 0
     
     return [x - z * X_offset + 200,
             y - z * Y_offset + 200]
@@ -95,6 +100,8 @@ def get_pos(point):
 #         pc[i][Z] *= multiplier
 
 def rotate_cloud(pc, angle, axis):
+    angle = math.radians(angle)
+
     if axis == X:
         A = 1
         B = 2
@@ -121,7 +128,7 @@ def rotate_cloud(pc, angle, axis):
         pc.points[i][A] = xnew + CA
         pc.points[i][B] = ynew + CB
 
-
+    pc.sort()    
 
 # class Cloud:
 #     def __init__(self, cloud):
