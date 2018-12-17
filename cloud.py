@@ -88,6 +88,41 @@ def get_pos(point):
             y - z * Y_offset + 200]
 
 
+# def scale_cloud(pc, multiplier):
+#     for i in range(len(pc)):
+#         pc[i][X] *= multiplier
+#         pc[i][Y] *= multiplier
+#         pc[i][Z] *= multiplier
+
+def rotate_cloud(pc, angle, axis):
+    if axis == X:
+        A = 1
+        B = 2
+        CA = pc.max_y / 2
+        CB = pc.max_z / 2 
+    elif axis == Y:
+        A = 0
+        B = 2
+        CA = pc.max_x / 2
+        CB = pc.max_z / 2 
+    elif axis == Z:
+        A = 0
+        B = 1
+        CA = pc.max_x / 2
+        CB = pc.max_y / 2
+
+    for i in range(len(pc.points)):
+        s = math.sin(angle)
+        c = math.cos(angle)
+        pc.points[i][A] -= CA
+        pc.points[i][B] -= CB
+        xnew = pc.points[i][A] * c - pc.points[i][B] * s
+        ynew = pc.points[i][A] * s + pc.points[i][B] * c
+        pc.points[i][A] = xnew + CA
+        pc.points[i][B] = ynew + CB
+
+
+
 # class Cloud:
 #     def __init__(self, cloud):
 #         self.cloud = cloud
