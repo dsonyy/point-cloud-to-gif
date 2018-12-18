@@ -23,7 +23,7 @@ def preview(cloud, win_width, win_height, function=None, *args):
         window_main.fill([0,0,0])
         for p in cloud.points:
             if len(p) == 3:
-                color = (coloring.deep(cloud, p))                
+                color = (coloring.xyzrgb(cloud, p))                
                 s = style.square(p + [color])
             else:
                 s = style.square(p)
@@ -38,5 +38,6 @@ def preview(cloud, win_width, win_height, function=None, *args):
         
 
 c = cloudd.PointCloud(sys.argv[1])
-# cloudd.color(c, coloring.DEFAULT_COLORING)
-preview(c, 800, 600, cloudd.rotate_cloud, c, 45, 2)
+cloudd.rotate_cloud(c, 15, 0)
+# cloudd.color(c, coloring.dark)
+preview(c, 800, 600, cloudd.rotate_cloud, c, 15, 2)

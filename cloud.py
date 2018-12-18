@@ -90,8 +90,8 @@ def get_pos(point):
     X_offset = 0
     Y_offset = 0
     
-    return [x - z * X_offset,
-            y - z * Y_offset]
+    return [x - z * X_offset + 200,
+            y - z * Y_offset + 200]
 
 
 # def scale_cloud(pc, multiplier):

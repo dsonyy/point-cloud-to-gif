@@ -40,4 +40,15 @@ def deep(cloud, point):
 
     return [r, g, b]
 
+def dark(pc, point):
+    if pc.has_colors:
+        color = point[3]
+    else:
+        color = [255, 255, 255]
+
+    k = math.floor(255 / pc.max_y * point[1])
+    
+    return color[0] - k, color[1] - k , color[2] - k
+
+
 DEFAULT_COLORING = xyzrgb
