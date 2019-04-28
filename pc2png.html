@@ -1,0 +1,240 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title>Preview</title>
+
+    <style>
+        /* width */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        /* Track */
+        ::-webkit-scrollbar-track {
+            background: #111;
+        }
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            background: #aaa; 
+        }
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ccc; 
+        }
+        
+        body {
+            font-family: "Courier New";
+            font-size: 12px;
+        }
+        
+        #scene {
+            background-color: #222; 
+            width: 600px; 
+            height: 500px; 
+            float: left; 
+            border: 1px solid #000; 
+            border-right: 0;
+        }
+        
+        #options {
+            height: 500px; 
+            min-width: 300px;
+            background-color: #111; 
+            float: left; 
+            border: 1px solid #000; 
+            overflow-y: scroll;
+            color: #ccc;
+        }
+        
+        .option {
+            padding: 5px;
+            border-bottom: 1px solid #444;
+            line-height: 22px;
+        }
+        
+        br {
+           display: block;
+           margin: 10px 0;
+        }
+        
+        select {
+            font-family: "Courier New";
+            font-size: 12px;
+            color: #ddd;
+            background-color: #555;
+        }
+        
+        input {
+            font-family: "Courier New";
+            font-size: 12px;
+            color: #ddd;
+            background-color: #555;
+        }
+        
+        button {
+            font-family: "Courier New";
+            font-size: 12px;
+            color: #ddd;
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="scene">
+    </canvas>
+    <div id="options">
+        <div class="option"><b><u>Preview:</u></b><br/>
+            <span style="float: left;">Scan name: </span>
+            <form style="float: right;" action="...">
+                <select name="nazwa">
+                    <option value="...">marszalek</option>
+                    <option value="...">2018-12-16-22-02-59</option>
+                    <option value="...">2018-12-15-21-19-31</option>
+                    <option value="...">pudelko</option>
+                    <option value="...">kostka</option>
+                    <option value="...">puszka</option>
+                </select>
+            </form>
+            <span style="clear: both;"></span>
+            <br>
+            
+            <span style="float: left;">Point cloud: </span>
+            <form style="float: right;" action="...">
+                <select name="nazwa">
+                    <option value="...">Raw</option>
+                    <option value="...">Processed</option>
+                </select>
+            </form>
+            <span style="clear: both;"></span>
+            <br>
+        </div>
+     
+        <div class="option"><b><u>Display:</u></b><br/>
+            <span style="float: left;">Points style: </span>
+            <form style="float: right;" action="...">
+                <select name="nazwa">
+                    <option value="...">Pixel</option>
+                    <option value="...">Pixel Alpha</option>
+                    <option value="...">Square</option>
+                    <option value="...">Square Alpha</option>
+                    <option value="...">Circle</option>
+                    <option value="...">Armchair</option>
+                </select>
+            </form>
+            <span style="clear: both;"></span>
+            <br>
+            
+            <span style="float: left;">Points coloring: </span>
+            <form style="float: right;" action="...">
+                <select name="nazwa">
+                    <option value="...">XYZ/RGB</option>
+                    <option value="...">Z/Grayscale</option>
+                </select>
+            </form>
+            <span style="clear: both;"></span>
+            <br>
+        </div>
+
+        <div class="option"><b><u>Position:</u></b><br/>
+            <span style="float: left;">X Position offset: </span>
+                <form style="float: right;" action="...">
+                    <input type="number" name="..." min="0" max="360"></input><br>
+                </form>
+            <span style="clear: both;"></span>
+            <br>
+            
+            <span style="float: left;">Y Position offset: </span>
+                <form style="float: right;" action="...">
+                    <input type="number" name="..." min="0" max="360"></input><br>
+                </form>
+            <span style="clear: both;"></span>
+            <br>
+            
+            <span style="float: left;">Z Position offset: </span>
+                <form style="float: right;" action="...">
+                    <input type="number" name="..." min="0" max="360"></input><br>
+                </form>
+            <span style="clear: both;"></span>
+            <br>
+            <button>Reset</button><br>
+        </div>    
+
+        <div class="option"><b><u>Rotation:</u></b><br/>
+            <span style="float: left;">X Rotation: </span>
+                <form style="float: right;" action="...">
+                    <input type="number" name="..." min="0" max="360"></input><br>
+                </form>
+            <span style="clear: both;"></span>
+            <br>
+            
+            <span style="float: left;">Y Rotation: </span>
+                <form style="float: right;" action="...">
+                    <input type="number" name="..." min="0" max="360"></input><br>
+                </form>
+            <span style="clear: both;"></span>
+            <br>
+            
+            <span style="float: left;">Z Rotation: </span>
+                <form style="float: right;" action="...">
+                    <input type="number" name="..." min="0" max="360"></input><br>
+                </form>
+
+            <span style="clear: both;"></span>
+            <br>
+            <button>Reset</button><br>
+        </div>  
+
+        <div class="option"><b><u>Scale:</u></b><br/>
+            <span style="float: left;"><u>XYZ Scale: </u></span>
+                <form style="float: right;" action="...">
+                    <input type="number" name="..." min="0" max="360"></input><br>
+                </form>
+            <span style="clear: both;"></span>
+            <br>
+            
+            <span style="float: left;">X Scale: </span>
+                <form style="float: right;" action="...">
+                    <input type="number" name="..." min="0" max="360"></input><br>
+                </form>
+            <span style="clear: both;"></span>
+            <br>
+            
+            <span style="float: left;">Y Scale: </span>
+                <form style="float: right;" action="...">
+                    <input type="number" name="..." min="0" max="360"></input><br>
+                </form>
+            <span style="clear: both;"></span>
+            <br>
+            
+            <span style="float: left;">Z Scale: </span>
+                <form style="float: right;" action="...">
+                    <input type="number" name="..." min="0" max="360"></input><br>
+                </form>
+            <span style="clear: both;"></span>
+            <br>
+            <button>Reset</button><br>
+        </div>  
+        
+        
+        <div class="option"><b><u>Flip:</u></b><br/>
+            <button>Flip Horizontally</button><br>
+            <button>Flip Vertically</button><br>
+            <button>Reset</button><br>
+        </div>  
+        
+        <div class="option"><b><u>Export and download</u></b><br/>
+            <u>Scene:</u><br> 
+            <button>Download scene as PNG</button><br>
+            <button>Download scene as multiply PNGs</button><br>
+            <button>Download scene as rotating GIF</button><br>
+            <u>Point cloud:</u><br>
+            <button>Export as new</button><br>
+            <button>Export and overwrite</button><br>
+            <button>Download</button><br>
+        </div>
+        </div>
+    </div>
+
+</body>
+</html>
