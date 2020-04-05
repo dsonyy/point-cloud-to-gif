@@ -1,12 +1,5 @@
 import math
 
-'''
-def dummy(cloud, point) -> list:
-
-    
-    return [r, g, b]
-'''
-
 def xyzrgb(cloud, point, repeat=1):
     r = math.floor(255 * repeat / (cloud.max_x) * point[0] % 510)
     g = math.floor(255 * repeat / (cloud.max_y) * point[1] % 510)

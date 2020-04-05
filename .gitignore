@@ -1,4 +1,2 @@
-.vscode\*
-output\*
+.vscode
 __pycache__
-.vscode/launch.json
