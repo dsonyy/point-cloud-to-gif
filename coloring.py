@@ -1,15 +1,18 @@
-# coloring.py
-#
-# When the main loop renders the point cloud, it calls a function for each point which returns its color. 
-# Then the point with its color is passed to STYLE_FUNCTION.
-# 
-# This module contains functions which can be called for each point. Each one must return a list of 3 ints [Red, Green, Blue]
-# and takes: a PointCloud object and a XYZ point to analyze.
-#
+"""
+    coloring.py
+
+    When the main loop renders the point cloud, it calls a function for each point which returns its color. 
+    Then the point with its color is passed to STYLE_FUNCTION.
+ 
+    This module contains functions which can be called for each point. Each one must return a list of 3 ints [Red, Green, Blue]
+    and takes: a PointCloud object and a XYZ point to analyze.
+"""
 import math
 
-# Converts point's XYZ coordinates to the RGB color.
 def xyzrgb(cloud, point):
+    """
+        Converts point's XYZ coordinates to the RGB color.
+    """
     REPEAT = 1 # how many times repeat RGB colors spectrum
 
     r = math.floor(255 * REPEAT / (cloud.max_x) * point[0] % 510)

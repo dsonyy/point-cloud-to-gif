@@ -2,6 +2,8 @@ import pygame
 import sys
 import math
 import threading
+import os
+import imageio
 
 import coloring
 import style
@@ -11,11 +13,13 @@ cloud = None
 redraw = True
 running = False
 
-# Function creates pygame window, handles user input and renders point cloud
 def window_loop():
+    """
+        Creates pygame window, handles user input and renders point cloud
+    """
     # Prepare pygame window
     global redraw, running
-    width, height = 800, 800
+    width, height = 480, 320
     window_main = pygame.display.set_mode([width, height], flags=pygame.RESIZABLE)
     window_main.fill([0,0,0])
     pygame.display.flip()
@@ -41,27 +45,30 @@ def window_loop():
             for p in cloud.points:
                 if len(p) == 3:
                     color = (coloring.DEFAULT_COLORING(cloud, p)) # Add colors to the point
-                    s = style.STYLE_FUNCTION(p + [color]) # Get pygame.Surface of the point
-                else:
-                    s = style.square(p) # Get pygame.Surface of the point
+                    p += [color]
+                s = style.square(p) # Get pygame.Surface of the point
                 window_main.blit(s, cloud.get_pos(p, width, height))
             pygame.display.flip()
             redraw = False
 
-# Function handles user command line input and executes his commands
+
 def cli_loop():
+    """
+        Handles user command line input and executes his commands
+    """
     global cloud, redraw, running
-    print("---------------------------------------------------------------------\n"
+    print("-----------------------------------------------------------------------\n"
           "Usage: \n"
-          "   L path        - Loads a point cloud from file.\n"
-          "   M x (y)       - Moves a point cloud on the screen.\n"
-          "   R x (y)(z)    - Rotates a point cloud around X, Y, Z axis.\n"
-          "                   Specify angle in degrees.\n"
-          "   S (filename)  - Saves a screenshot* of the screen to a file.\n"
-          "   C scale       - Sets a point cloud scale on screen.\n"
+          "   L path                - Loads a point cloud from file.\n"
+          "   M x (y)               - Moves a point cloud on the screen.\n"
+          "   R x (y)(z)            - Rotates a point cloud around X, Y, Z axis.\n"
+          "                           Specify angle in degrees.\n"
+          "   S (filename)          - Saves a screenshot* of the screen to a file.\n"
+          "   C scale               - Sets a point cloud scale on the screen.\n"
+          "   G (filaname) (frames) - Saves a GIF file with a rotating point cloud.\n"
           "\n"
           "* - Resizing the render window affects on the size of the screenshot.\n"
-          "---------------------------------------------------------------------\n")
+          "-----------------------------------------------------------------------\n")
     
     if len(sys.argv) > 2:
         try:
@@ -73,6 +80,8 @@ def cli_loop():
             print("Unable to load cloud.")
     # Main command line loop
     while True:
+        while redraw and running:
+            pass
         cmd = input(":").strip().lower().split()
         if not cmd: continue
         if cmd[0] in ["r", "rotate"]: # rotates the point cloud
@@ -142,6 +151,46 @@ def cli_loop():
             except Exception as e:
                 print("Unable to save: " + str(e))
 
+        elif cmd[0] in ["g", "gif"]: # generates and saves a GIF file
+            if len(cmd) > 3:
+                print("Invalid number of arguments.")
+                continue
+            if not running:
+                print("Point cloud is not loaded.")
+                continue
+            filename_target = "render.gif"
+            number_of_frames = 10
+            if len(cmd) >= 2:
+                filename_target = str(cmd[1])
+            if len(cmd) == 3:
+                try:
+                    number_of_frames = int(cmd[2])
+                except:
+                    print("Invalid number of frames.")
+                    continue
+            print("Please wait...")
+            try:
+                os.mkdir("temp")
+            except FileExistsError:
+                filenames = os.listdir("temp")
+                for filename in filenames:
+                    os.remove("temp/" + filename)
+            for i in range(number_of_frames):
+                cloud.rotate_cloud(360 / number_of_frames, 1)
+                redraw = True
+                while redraw:
+                    pass
+                pygame.image.save(pygame.display.get_surface(), "temp/" + str(i) + ".png")
+                print("Frame " + str(i) + " saved.")
+            filenames = [int(f[:-4]) for f in os.listdir("temp")]
+            filenames.sort()
+            filenames = [str(f) + ".png" for f in filenames]
+            with imageio.get_writer(filename_target, mode="I", format="gif") as writer:
+                for filename, i in zip(filenames, range(len(filenames))):
+                    image = imageio.imread("temp/" + filename)
+                    writer.append_data(image)
+                    print("Frame " + str(i) + " appended to the gif.")
+
         elif cmd[0] in ["l", "load"]: # loads the point cloud from file and creates pygame window if it doesn't exist yet
             if len(cmd) != 2:
                 print("Invalid number of arguments.")
@@ -180,4 +229,5 @@ if __name__ == "__main__":
     try:
         cli_loop()
     except (EOFError, KeyboardInterrupt):
+        running = False
         print("Exiting.")
