@@ -1,2 +1,3 @@
 pygame==1.9.6
 imageio==2.6.1
+pygifsicle==1.0.1

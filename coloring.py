@@ -1,6 +1,4 @@
 """
-    coloring.py
-
     When the main loop renders the point cloud, it calls a function for each point which returns its color. 
     Then the point with its color is passed to STYLE_FUNCTION.
  
@@ -27,6 +25,12 @@ def xyzrgb(cloud, point):
     elif b > 255: b = b - 255
 
     return [r, g, b]
+
+def singlecolor(cloud, point):
+    """
+        Every point has the same color.
+    """
+    return [255, 0, 0]
 
 # Function which will be called by the main program for every rendered points.
 DEFAULT_COLORING = xyzrgb

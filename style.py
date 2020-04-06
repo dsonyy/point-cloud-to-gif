@@ -1,6 +1,4 @@
 """
-    style.py
-    
     When the main loop renders the point cloud, it calls a function for each point which returns a pygame.Surface. 
     Then every pygame.Surface object is rendered, the furthest ones are rendered first and the closest ones 
     are rendered last. 

@@ -4,6 +4,7 @@ import math
 import threading
 import os
 import imageio
+import pygifsicle
 
 import coloring
 import style
@@ -58,16 +59,24 @@ def cli_loop():
     """
     global cloud, redraw, running
     print("-----------------------------------------------------------------------\n"
-          "Usage: \n"
+          "Commands: \n"
           "   L path                - Loads a point cloud from file.\n"
           "   M x (y)               - Moves a point cloud on the screen.\n"
           "   R x (y)(z)            - Rotates a point cloud around X, Y, Z axis.\n"
           "                           Specify angle in degrees.\n"
           "   S (filename)          - Saves a screenshot* of the screen to a file.\n"
           "   C scale               - Sets a point cloud scale on the screen.\n"
-          "   G (filaname) (frames) - Saves a GIF file with a rotating point cloud.\n"
+          "   G (filaname) (frames) - Saves a GIF file with an animation of\n"
+          "                           rotating a point cloud.\n"
           "\n"
           "* - Resizing the render window affects on the size of the screenshot.\n"
+          "\n"
+          "Example usage:\n"
+          "   L input/cone.txt\n"
+          "   R 45 33.333 -700\n"
+          "   S screenshot.png\n"
+          "   G animation.gif 360\n"
+          "   L input/marszalek.txt\n"
           "-----------------------------------------------------------------------\n")
     
     if len(sys.argv) > 2:
@@ -162,6 +171,8 @@ def cli_loop():
             number_of_frames = 10
             if len(cmd) >= 2:
                 filename_target = str(cmd[1])
+                if filename_target[-4:].lower() != ".gif":
+                    filename_target += ".gif"
             if len(cmd) == 3:
                 try:
                     number_of_frames = int(cmd[2])
@@ -185,11 +196,17 @@ def cli_loop():
             filenames = [int(f[:-4]) for f in os.listdir("temp")]
             filenames.sort()
             filenames = [str(f) + ".png" for f in filenames]
-            with imageio.get_writer(filename_target, mode="I", format="gif") as writer:
+            with imageio.get_writer(filename_target, mode="I", format="gif", duration=0.2) as writer:
                 for filename, i in zip(filenames, range(len(filenames))):
                     image = imageio.imread("temp/" + filename)
                     writer.append_data(image)
                     print("Frame " + str(i) + " appended to the gif.")
+            try:
+                print("Compressing the GIF...")
+                pygifsicle.optimize(filename_target) # Optimize a GIF using gifsicle
+            except FileNotFoundError:
+                print("gifsicle not found so the GIF has not been compressed.")
+                
 
         elif cmd[0] in ["l", "load"]: # loads the point cloud from file and creates pygame window if it doesn't exist yet
             if len(cmd) != 2:

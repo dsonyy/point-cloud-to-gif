@@ -34,20 +34,17 @@ class PointCloud:
         for line in data:
             if not line.split():
                 continue
-            line = line.replace("\n", "")
-            point = []
-            for num in line.split(";"):
-                point.append(float(num))
-            if len(point) == 3:
-                self.points.append(point)
-                if point[X] > self.max_x: self.max_x = point[X]
-                elif point[X] < self.min_x: self.min_x = point[X]
+            line = line.replace("\n", "").split(";")
+            point = [float(line[0]), float(line[1]), float(line[2])]
+            self.points.append(point)
+            if point[X] > self.max_x: self.max_x = point[X]
+            elif point[X] < self.min_x: self.min_x = point[X]
 
-                if point[Y] > self.max_y: self.max_y = point[Y]
-                elif point[Y] < self.min_y: self.min_y = point[Y]
+            if point[Y] > self.max_y: self.max_y = point[Y]
+            elif point[Y] < self.min_y: self.min_y = point[Y]
 
-                if point[Z] > self.max_z: self.max_z = point[Z]
-                elif point[Z] < self.min_z: self.min_z = point[Z]
+            if point[Z] > self.max_z: self.max_z = point[Z]
+            elif point[Z] < self.min_z: self.min_z = point[Z]
         self.normalise()
 
     def sort(self):
