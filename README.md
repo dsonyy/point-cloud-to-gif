@@ -14,9 +14,9 @@
         - [GIF compression](#gif-compression)
         - [GIF modifying](#gif-modifying)
 ## What is it?
-**Point Cloud to GIF** is a simple program which allows you to render plain text XYZ point clouds and save them to PNG files or create a rotating GIF animation. This piece of software was created primarily as part of Scan&Print project - a device which scans real physic objects, generates a point cloud from them and prepare 3D prinable files.
+**Point Cloud to GIF** is a simple program which allows you to render plain text XYZ point clouds and save them to PNG files or create a rotating GIF animation. This piece of software was created primarily as part of Scan&Print - the project of a device which scans real physical objects, generates a point cloud from them and prepare 3D prinable files.
 
-The program bases on really naive algorithms for manipulating point clouds so every action on big clouds may takes some time. It's not a professional software but a hobby project for creating rotating GIFs ;)
+The program bases on really naive algorithms for manipulating point clouds so every action on big clouds may take some time. It's not a professional software but a hobby project for creating nice GIFs ;)
 
 ## Gallery
 <p align="center">
@@ -34,10 +34,10 @@ The point clouds from the last row are part of Scan&Print project!
 2. Install Python dependencies from `requirements.txt`.
 3. Run `pc2gif.py`.
 
-**Optional:** This program can use *gifsicle* software for compressing GIF files before export. It's not required but reduces output files size. You can get binaries for many operating systems from the project website: https://www.lcdf.org/gifsicle/. Be sure that `gifsicle` executable is added to your global path. 
+**Optional:** This program can use *gifsicle* software for compressing GIF files before export. It's not required but reduces output files size. You can get binaries for many operating systems from the project website: https://www.lcdf.org/gifsicle/. To be detected, `gifsicle` executable must be added to your system global path.
 
 ## Usage
-If you execute *pc2gif*, you will see something like internal command prompt. Below you can read more about available commands.
+If you execute *pc2gif*, you will see something like internal command prompt. Below you can read more about how to use it.
 
 ### Command list
 Parameters between `(` and `)` are optional.
