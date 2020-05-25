@@ -9,10 +9,7 @@
     - [About input files](#about-input-files)
         - [Supported file format](#supported-file-format)
         - [Generating point clouds](#generating-point-clouds)
-    - [About output files](#about-output-files)
-        - [Change output size](#change-output-size)
-        - [GIF compression](#gif-compression)
-        - [GIF modifying](#gif-modifying)
+
 ## What is it?
 **Point Cloud to GIF** is a simple program which allows you to render plain text XYZ point clouds and save them to PNG files or create a rotating GIF animation. This piece of software was created primarily as part of Scan&Print - the project of a device which scans real physical objects, generates a point cloud from them and prepare 3D prinable files.
 
@@ -66,10 +63,6 @@ This is an example of valid input point cloud:
 0.90688896 ; 0.13263926 ; -5.49270248
 0.01431680 ; 0.15915152 ; -5.49270248
 1.47087491 ; 0.22544102 ; -5.49270248
-1.35835743 ; 0.46180943 ; -5.49270248
-0.47499299 ; 0.13312708 ; -5.49270248
-1.82343197 ; 0.70383137 ; -5.49270248
-1.96170413 ; 0.30591235 ; -5.49270248
 ...
 ```
 - There must be only one XYZ point per line.
@@ -80,13 +73,3 @@ This is an example of valid input point cloud:
 #### Generating point clouds
 You can easily generate such a file using for example [CloudCompare software](https://www.danielgm.net/cc/) and  [Points Sampling on mesh](http://www.cloudcompare.org/doc/wiki/index.php?title=Mesh%5CSample_points) tool.
 
-### About output files
-
-#### Change output size
-resize the render window manually to change the default size of your output files.
-
-#### GIF compression
-By default, *pc2gif* exports uncompressed GIF file. You can install `gifsicle` software to automatically compress export files. Read more in [Installation section](#installation).
-
-#### GIF modifying
-If you want to modify your GIF you can use [ezgif.com website](https://ezgif.com/).
